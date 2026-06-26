@@ -1,3 +1,5 @@
+include math
+
 type
     ## Generic bit‑packed complex integer.
     ## Underlying storage is exactly the size of T (int8/int16/int32/int64).
@@ -42,7 +44,7 @@ proc make_cpx*[T: SomeInteger](re, im: int): cpx[T] =
     ## Each part is encoded into half‑width signed fields.
     let bits = half_bits(T)
     let raw = (encode_n(im, bits) shl bits) or encode_n(re, bits)
-    cpx[T](raw.T)
+    cast[cpx[T]](raw)
 
 
 proc `+`*[T: SomeInteger](a, b: cpx[T]): cpx[T] =
